@@ -1,0 +1,2850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DermaBuddy AI | Your Skin's Best Friend</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        :root {
+
+            --rose: #E85D83;
+            --rose-dark: #D64B73;
+            --rose-light: #FCE4EB;
+
+            --lavender: #9B8AFB;
+            --lavender-dark: #8876E8;
+            --lavender-light: #EEEAFE;
+
+            --champagne: #F3D7B3;
+            --champagne-light: #FFF1DF;
+
+            --sage: #88B89A;
+            --sage-light: #E7F3EB;
+
+            --ivory: #FFF9F5;
+            --white: #FFFFFF;
+
+            --text: #332536;
+            --muted: #817583;
+
+            --shadow: rgba(71, 43, 61, .13);
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family: "DM Sans", sans-serif;
+
+            color: var(--text);
+
+            background:
+
+                radial-gradient(
+                    circle at 5% 5%,
+                    rgba(232, 93, 131, .25),
+                    transparent 25%
+                ),
+
+                radial-gradient(
+                    circle at 95% 5%,
+                    rgba(155, 138, 251, .25),
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 90% 95%,
+                    rgba(243, 215, 179, .30),
+                    transparent 25%
+                ),
+
+                radial-gradient(
+                    circle at 10% 90%,
+                    rgba(136, 184, 154, .18),
+                    transparent 22%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #FFF9F5 0%,
+                    #FFF3F6 45%,
+                    #F7F4FF 100%
+                );
+
+            padding: 22px;
+
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+
+        /* =====================================================
+           FLOATING DECORATIONS
+        ===================================================== */
+
+        .decor {
+
+            position: fixed;
+
+            pointer-events: none;
+
+            z-index: 0;
+
+            user-select: none;
+        }
+
+
+        .decor.one {
+
+            top: 70px;
+            left: 25px;
+
+            font-size: 55px;
+
+            opacity: .20;
+
+            animation:
+                floatOne 6s ease-in-out infinite;
+        }
+
+
+        .decor.two {
+
+            right: 35px;
+            top: 150px;
+
+            font-size: 48px;
+
+            opacity: .18;
+
+            animation:
+                floatTwo 7s ease-in-out infinite;
+        }
+
+
+        .decor.three {
+
+            left: 7%;
+            bottom: 80px;
+
+            font-size: 38px;
+
+            opacity: .16;
+
+            animation:
+                floatThree 8s ease-in-out infinite;
+        }
+
+
+        .decor.four {
+
+            right: 8%;
+            bottom: 90px;
+
+            font-size: 42px;
+
+            opacity: .16;
+
+            animation:
+                floatTwo 6s ease-in-out infinite;
+        }
+
+
+        @keyframes floatOne {
+
+            0%, 100% {
+                transform:
+                    translateY(0)
+                    rotate(-8deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-20px)
+                    rotate(8deg);
+            }
+        }
+
+
+        @keyframes floatTwo {
+
+            0%, 100% {
+                transform:
+                    translateY(0)
+                    rotate(8deg);
+            }
+
+            50% {
+                transform:
+                    translateY(22px)
+                    rotate(-8deg);
+            }
+        }
+
+
+        @keyframes floatThree {
+
+            0%, 100% {
+                transform:
+                    translateX(0);
+            }
+
+            50% {
+                transform:
+                    translateX(18px);
+            }
+        }
+
+
+        /* =====================================================
+           MAIN APP
+        ===================================================== */
+
+        .app {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: min(1220px, 100%);
+
+            min-height: 850px;
+
+            margin:
+                0 auto 25px;
+
+            display: grid;
+
+            grid-template-columns:
+                360px
+                minmax(0, 1fr);
+
+            background:
+                rgba(255,255,255,.68);
+
+            backdrop-filter:
+                blur(28px);
+
+            -webkit-backdrop-filter:
+                blur(28px);
+
+            border:
+                1px solid
+                rgba(255,255,255,.95);
+
+            border-radius: 34px;
+
+            box-shadow:
+
+                0 35px 100px
+                rgba(71,43,61,.15),
+
+                inset 0 1px 0
+                rgba(255,255,255,.95);
+
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            padding:
+                30px 27px;
+
+            background:
+
+                linear-gradient(
+                    155deg,
+                    rgba(255,255,255,.94),
+                    rgba(255,237,244,.80)
+                );
+
+            border-right:
+                1px solid
+                rgba(255,255,255,.85);
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+        }
+
+
+        /* BRAND */
+
+        .brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                13px;
+
+            margin-bottom:
+                32px;
+        }
+
+
+        .brand-logo {
+
+            width:
+                58px;
+
+            height:
+                58px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                20px;
+
+            font-size:
+                28px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #E85D83,
+                    #9B8AFB
+                );
+
+            box-shadow:
+
+                0 12px 28px
+                rgba(232,93,131,.27);
+
+            position:
+                relative;
+        }
+
+
+        .brand-logo::after {
+
+            content: "";
+
+            position:
+                absolute;
+
+            width:
+                10px;
+
+            height:
+                10px;
+
+            border-radius:
+                50%;
+
+            background:
+                white;
+
+            top:
+                7px;
+
+            right:
+                8px;
+
+            opacity:
+                .75;
+        }
+
+
+        .brand-name {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                24px;
+
+            color:
+                #3A2938;
+        }
+
+
+        .brand-subtitle {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+
+            letter-spacing:
+                1.2px;
+
+            font-weight:
+                700;
+        }
+
+
+        /* HERO */
+
+        .hero {
+
+            margin-bottom:
+                25px;
+        }
+
+
+        .mini-badge {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                6px;
+
+            padding:
+                7px 11px;
+
+            border-radius:
+                30px;
+
+            background:
+                rgba(255,255,255,.80);
+
+            border:
+                1px solid
+                rgba(255,255,255,.95);
+
+            color:
+                var(--rose);
+
+            font-size:
+                9px;
+
+            font-weight:
+                700;
+
+            margin-bottom:
+                12px;
+
+            box-shadow:
+                0 5px 15px
+                rgba(71,43,61,.04);
+        }
+
+
+        .hero h1 {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                34px;
+
+            line-height:
+                1.12;
+
+            margin-bottom:
+                11px;
+
+            color:
+                #342633;
+        }
+
+
+        .hero h1 span {
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    #E85D83,
+                    #9B8AFB
+                );
+
+            -webkit-background-clip:
+                text;
+
+            background-clip:
+                text;
+
+            color:
+                transparent;
+        }
+
+
+        .hero p {
+
+            color:
+                var(--muted);
+
+            font-size:
+                12px;
+
+            line-height:
+                1.7;
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap:
+                8px;
+
+            margin-bottom:
+                20px;
+        }
+
+
+        .stat {
+
+            padding:
+                12px 8px;
+
+            text-align:
+                center;
+
+            background:
+                rgba(255,255,255,.74);
+
+            border:
+                1px solid
+                rgba(255,255,255,.95);
+
+            border-radius:
+                15px;
+
+            transition:
+                .25s;
+        }
+
+
+        .stat:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(71,43,61,.07);
+        }
+
+
+        .stat-icon {
+
+            font-size:
+                17px;
+
+            margin-bottom:
+                4px;
+        }
+
+
+        .stat strong {
+
+            display:
+                block;
+
+            font-size:
+                11px;
+        }
+
+
+        .stat span {
+
+            display:
+                block;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+            margin-top:
+                2px;
+        }
+
+
+        /* =====================================================
+           FEATURES
+        ===================================================== */
+
+        .feature-title {
+
+            font-size:
+                9px;
+
+            color:
+                #9C8D99;
+
+            letter-spacing:
+                1px;
+
+            margin-bottom:
+                9px;
+
+            font-weight:
+                700;
+        }
+
+
+        .feature {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+
+            padding:
+                11px;
+
+            margin-bottom:
+                8px;
+
+            border-radius:
+                15px;
+
+            background:
+                rgba(255,255,255,.64);
+
+            border:
+                1px solid
+                rgba(255,255,255,.90);
+
+            transition:
+                .25s;
+        }
+
+
+        .feature:hover {
+
+            transform:
+                translateX(4px);
+
+            background:
+                rgba(255,255,255,.94);
+
+            box-shadow:
+                0 9px 22px
+                rgba(71,43,61,.07);
+        }
+
+
+        .feature-icon {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            flex-shrink:
+                0;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                12px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #FCE4EB,
+                    #EEEAFE
+                );
+
+            font-size:
+                17px;
+        }
+
+
+        .feature strong {
+
+            display:
+                block;
+
+            font-size:
+                11px;
+        }
+
+
+        .feature small {
+
+            display:
+                block;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+            margin-top:
+                3px;
+        }
+
+
+        /* =====================================================
+           DAILY TIP
+        ===================================================== */
+
+        .tip {
+
+            margin-top:
+                auto;
+
+            padding:
+                15px;
+
+            border-radius:
+                18px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #FFF1DF,
+                    #FCE5ED,
+                    #EEEAFE
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.85);
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+        }
+
+
+        .tip::after {
+
+            content:
+                "✨";
+
+            position:
+                absolute;
+
+            right:
+                12px;
+
+            bottom:
+                8px;
+
+            font-size:
+                25px;
+
+            opacity:
+                .35;
+        }
+
+
+        .tip-label {
+
+            font-size:
+                9px;
+
+            color:
+                var(--rose);
+
+            font-weight:
+                700;
+
+            margin-bottom:
+                5px;
+        }
+
+
+        .tip strong {
+
+            display:
+                block;
+
+            font-size:
+                11px;
+
+            margin-bottom:
+                4px;
+        }
+
+
+        .tip p {
+
+            font-size:
+                9px;
+
+            color:
+                #777080;
+
+            line-height:
+                1.55;
+
+            max-width:
+                230px;
+        }
+
+
+        /* =====================================================
+           CHAT SECTION
+        ===================================================== */
+
+        .chat-section {
+
+            min-width:
+                0;
+
+            min-height:
+                850px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            background:
+                rgba(255,255,255,.30);
+        }
+
+
+        /* =====================================================
+           CHAT HEADER
+        ===================================================== */
+
+        .chat-header {
+
+            flex-shrink:
+                0;
+
+            padding:
+                22px 27px;
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            background:
+                rgba(255,255,255,.50);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.85);
+        }
+
+
+        .profile {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+        }
+
+
+        .avatar {
+
+            position:
+                relative;
+
+            width:
+                50px;
+
+            height:
+                50px;
+
+            border-radius:
+                18px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #F2B6C8,
+                    #B7A8FF
+                );
+
+            font-size:
+                24px;
+
+            box-shadow:
+                0 8px 22px
+                rgba(155,138,251,.20);
+        }
+
+
+        .avatar-glow {
+
+            position:
+                absolute;
+
+            width:
+                7px;
+
+            height:
+                7px;
+
+            border-radius:
+                50%;
+
+            background:
+                white;
+
+            top:
+                8px;
+
+            left:
+                9px;
+
+            opacity:
+                .75;
+        }
+
+
+        .online {
+
+            position:
+                absolute;
+
+            right:
+                -2px;
+
+            bottom:
+                -2px;
+
+            width:
+                13px;
+
+            height:
+                13px;
+
+            border-radius:
+                50%;
+
+            background:
+                #55C990;
+
+            border:
+                2px solid white;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(85,201,144,.12);
+        }
+
+
+        .profile h3 {
+
+            font-size:
+                15px;
+        }
+
+
+        .profile p {
+
+            color:
+                #4FAE7C;
+
+            font-size:
+                9px;
+
+            margin-top:
+                4px;
+
+            font-weight:
+                600;
+        }
+
+
+        .header-pill {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+            padding:
+                8px 12px;
+
+            border-radius:
+                30px;
+
+            background:
+                rgba(255,255,255,.78);
+
+            border:
+                1px solid
+                rgba(255,255,255,.95);
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+        }
+
+
+        .header-pill span {
+
+            width:
+                6px;
+
+            height:
+                6px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--rose);
+        }
+
+
+        /* =====================================================
+           CHAT BOX
+        ===================================================== */
+
+        .chat-box {
+
+            flex:
+                1;
+
+            min-height:
+                0;
+
+            padding:
+                28px;
+
+            overflow-y:
+                auto;
+
+            overflow-x:
+                hidden;
+
+            scroll-behavior:
+                smooth;
+        }
+
+
+        .chat-box::-webkit-scrollbar {
+
+            width:
+                5px;
+        }
+
+
+        .chat-box::-webkit-scrollbar-thumb {
+
+            background:
+                #E3D4DD;
+
+            border-radius:
+                20px;
+        }
+
+
+        /* =====================================================
+           WELCOME CARD
+        ===================================================== */
+
+        .welcome-card {
+
+            padding:
+                20px;
+
+            margin-bottom:
+                22px;
+
+            border-radius:
+                22px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(252,228,235,.96),
+                    rgba(238,234,254,.96)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.96);
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            box-shadow:
+                0 10px 28px
+                rgba(71,43,61,.05);
+        }
+
+
+        .welcome-card::before {
+
+            content:
+                "🌸";
+
+            position:
+                absolute;
+
+            right:
+                22px;
+
+            top:
+                12px;
+
+            font-size:
+                48px;
+
+            opacity:
+                .22;
+        }
+
+
+        .welcome-card::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                100px;
+
+            height:
+                100px;
+
+            right:
+                -40px;
+
+            bottom:
+                -50px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(243,215,179,.30);
+        }
+
+
+        .welcome-card small {
+
+            color:
+                var(--rose);
+
+            font-size:
+                9px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                .8px;
+        }
+
+
+        .welcome-card h2 {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                22px;
+
+            margin:
+                7px 0;
+        }
+
+
+        .welcome-card p {
+
+            color:
+                var(--muted);
+
+            font-size:
+                11px;
+
+            line-height:
+                1.6;
+
+            max-width:
+                530px;
+        }
+
+
+        /* =====================================================
+           MESSAGES
+        ===================================================== */
+
+        .message {
+
+            display:
+                flex;
+
+            margin-bottom:
+                18px;
+
+            animation:
+                messageIn .3s ease;
+        }
+
+
+        @keyframes messageIn {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateY(9px);
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        .message.user {
+
+            justify-content:
+                flex-end;
+        }
+
+
+        .message-wrap {
+
+            max-width:
+                78%;
+        }
+
+
+        .bot-label {
+
+            color:
+                #A394A1;
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            margin:
+                0 0 5px 7px;
+
+            letter-spacing:
+                .5px;
+        }
+
+
+        .bubble {
+
+            padding:
+                14px 17px;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.65;
+
+            white-space:
+                pre-wrap;
+
+            overflow-wrap:
+                anywhere;
+
+            border-radius:
+                20px;
+        }
+
+
+        .bot .bubble {
+
+            background:
+                rgba(255,255,255,.94);
+
+            border:
+                1px solid
+                rgba(255,255,255,.98);
+
+            box-shadow:
+                0 9px 25px
+                rgba(71,43,61,.065);
+
+            border-bottom-left-radius:
+                5px;
+        }
+
+
+        .user .bubble {
+
+            color:
+                white;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #D94F78,
+                    #8F7CF0
+                );
+
+            box-shadow:
+                0 9px 24px
+                rgba(110,72,110,.20);
+
+            border-bottom-right-radius:
+                5px;
+        }
+
+
+        .typing {
+
+            color:
+                #9D94A0;
+
+            font-style:
+                italic;
+        }
+
+
+        /* =====================================================
+           QUICK QUESTIONS
+        ===================================================== */
+
+        .quick-area {
+
+            flex-shrink:
+                0;
+
+            padding:
+                0 25px 12px;
+        }
+
+
+        .quick-heading {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            margin-bottom:
+                8px;
+        }
+
+
+        .quick-heading span:first-child {
+
+            color:
+                #958B98;
+
+            font-size:
+                8px;
+
+            letter-spacing:
+                1px;
+
+            font-weight:
+                700;
+        }
+
+
+        .quick-heading span:last-child {
+
+            color:
+                #B0A5B1;
+
+            font-size:
+                8px;
+        }
+
+
+        .suggestions {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+            overflow-x:
+                auto;
+
+            padding-bottom:
+                3px;
+        }
+
+
+        .suggestions::-webkit-scrollbar {
+
+            height:
+                3px;
+        }
+
+
+        .suggestions::-webkit-scrollbar-thumb {
+
+            background:
+                #E3D5DF;
+
+            border-radius:
+                20px;
+        }
+
+
+        .suggestion {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                5px;
+
+            white-space:
+                nowrap;
+
+            padding:
+                9px 12px;
+
+            border-radius:
+                20px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.96);
+
+            background:
+                rgba(255,255,255,.80);
+
+            color:
+                #665D6C;
+
+            font-family:
+                inherit;
+
+            font-size:
+                9px;
+
+            cursor:
+                pointer;
+
+            transition:
+                .22s;
+        }
+
+
+        .suggestion:hover {
+
+            transform:
+                translateY(-2px);
+
+            background:
+                white;
+
+            color:
+                var(--rose);
+
+            box-shadow:
+                0 7px 18px
+                rgba(71,43,61,.08);
+        }
+
+
+        /* =====================================================
+           INPUT
+        ===================================================== */
+
+        .input-wrapper {
+
+            flex-shrink:
+                0;
+
+            padding:
+                9px 25px 21px;
+        }
+
+
+        .input-area {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                6px 7px 6px 17px;
+
+            border-radius:
+                24px;
+
+            background:
+                rgba(255,255,255,.95);
+
+            border:
+                1px solid
+                rgba(255,255,255,.98);
+
+            box-shadow:
+                0 11px 30px
+                rgba(71,43,61,.09);
+
+            transition:
+                .2s;
+        }
+
+
+        .input-area:focus-within {
+
+            box-shadow:
+                0 12px 35px
+                rgba(232,93,131,.14);
+
+            border-color:
+                rgba(232,93,131,.30);
+        }
+
+
+        #messageInput {
+
+            flex:
+                1;
+
+            min-width:
+                0;
+
+            border:
+                none;
+
+            outline:
+                none;
+
+            background:
+                transparent;
+
+            font-family:
+                inherit;
+
+            font-size:
+                13px;
+
+            color:
+                var(--text);
+        }
+
+
+        #messageInput::placeholder {
+
+            color:
+                #AAA1AD;
+        }
+
+
+        #sendButton {
+
+            width:
+                44px;
+
+            height:
+                44px;
+
+            flex-shrink:
+                0;
+
+            border:
+                none;
+
+            border-radius:
+                50%;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #E85D83,
+                    #9B8AFB
+                );
+
+            color:
+                white;
+
+            font-size:
+                17px;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 7px 18px
+                rgba(155,138,251,.25);
+
+            transition:
+                .2s;
+        }
+
+
+        #sendButton:hover {
+
+            transform:
+                scale(1.08)
+                rotate(-6deg);
+        }
+
+
+        #sendButton:active {
+
+            transform:
+                scale(.95);
+        }
+
+
+        #sendButton:disabled {
+
+            opacity:
+                .55;
+
+            cursor:
+                not-allowed;
+        }
+
+
+        .disclaimer {
+
+            text-align:
+                center;
+
+            color:
+                #AAA1AA;
+
+            font-size:
+                7px;
+
+            margin-top:
+                7px;
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media(max-width:950px) {
+
+            .app {
+
+                grid-template-columns:
+                    300px
+                    minmax(0,1fr);
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    29px;
+            }
+
+
+            .sidebar {
+
+                padding:
+                    25px 20px;
+            }
+
+
+            .chat-box {
+
+                padding:
+                    22px;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media(max-width:720px) {
+
+            body {
+
+                padding:
+                    7px;
+            }
+
+
+            .decor {
+
+                display:
+                    none;
+            }
+
+
+            .app {
+
+                width:
+                    100%;
+
+                min-height:
+                    96vh;
+
+                grid-template-columns:
+                    1fr;
+
+                border-radius:
+                    24px;
+            }
+
+
+            .sidebar {
+
+                display:
+                    none;
+            }
+
+
+            .chat-section {
+
+                min-height:
+                    96vh;
+            }
+
+
+            .chat-header {
+
+                padding:
+                    16px;
+            }
+
+
+            .header-pill {
+
+                display:
+                    none;
+            }
+
+
+            .chat-box {
+
+                padding:
+                    17px 13px;
+            }
+
+
+            .message-wrap {
+
+                max-width:
+                    91%;
+            }
+
+
+            .bubble {
+
+                font-size:
+                    12px;
+
+                padding:
+                    12px 14px;
+            }
+
+
+            .welcome-card {
+
+                padding:
+                    17px;
+            }
+
+
+            .welcome-card h2 {
+
+                font-size:
+                    20px;
+            }
+
+
+            .quick-area {
+
+                padding:
+                    0 13px 10px;
+            }
+
+
+            .input-wrapper {
+
+                padding:
+                    8px 13px 14px;
+            }
+
+
+            .disclaimer {
+
+                font-size:
+                    7px;
+
+                line-height:
+                    1.4;
+            }
+        }
+
+
+        /* SMALL MOBILE */
+
+        @media(max-width:420px) {
+
+            .profile h3 {
+
+                font-size:
+                    13px;
+            }
+
+
+            .profile p {
+
+                font-size:
+                    8px;
+            }
+
+
+            .avatar {
+
+                width:
+                    43px;
+
+                height:
+                    43px;
+
+                font-size:
+                    20px;
+            }
+
+
+            #messageInput {
+
+                font-size:
+                    12px;
+            }
+
+
+            #sendButton {
+
+                width:
+                    41px;
+
+                height:
+                    41px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- FLOATING DECORATIONS -->
+
+    <div class="decor one">🌸</div>
+
+    <div class="decor two">✨</div>
+
+    <div class="decor three">🫧</div>
+
+    <div class="decor four">🌷</div>
+
+
+    <!-- =====================================================
+         MAIN APP
+    ===================================================== -->
+
+    <div class="app">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="sidebar">
+
+
+            <!-- BRAND -->
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    🧴
+                </div>
+
+                <div>
+
+                    <div class="brand-name">
+                        DermaBuddy
+                    </div>
+
+                    <div class="brand-subtitle">
+                        AI SKINCARE COMPANION
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO -->
+
+            <div class="hero">
+
+                <div class="mini-badge">
+                    ✨ PERSONALIZED SKINCARE
+                </div>
+
+
+                <h1>
+
+                    Your skin deserves
+
+                    <span>
+                        better care.
+                    </span>
+
+                </h1>
+
+
+                <p>
+
+                    Get simple, friendly and personalized
+                    skincare guidance powered by AI.
+
+                </p>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats">
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        🧴
+                    </div>
+
+                    <strong>
+                        Simple
+                    </strong>
+
+                    <span>
+                        Routines
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        ✨
+                    </div>
+
+                    <strong>
+                        Smart
+                    </strong>
+
+                    <span>
+                        Guidance
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        🌸
+                    </div>
+
+                    <strong>
+                        Gentle
+                    </strong>
+
+                    <span>
+                        Approach
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- FEATURES -->
+
+            <div class="feature-title">
+
+                WHAT I CAN HELP WITH
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🔍
+                </div>
+
+                <div>
+
+                    <strong>
+                        Discover Your Skin Type
+                    </strong>
+
+                    <small>
+                        Understand your skin better
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ☀️
+                </div>
+
+                <div>
+
+                    <strong>
+                        Morning Routine
+                    </strong>
+
+                    <small>
+                        Start your day right
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🌙
+                </div>
+
+                <div>
+
+                    <strong>
+                        Night Routine
+                    </strong>
+
+                    <small>
+                        Simple nighttime care
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🧪
+                </div>
+
+                <div>
+
+                    <strong>
+                        Ingredient Guide
+                    </strong>
+
+                    <small>
+                        Understand skincare actives
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- DAILY TIP -->
+
+            <div class="tip">
+
+                <div class="tip-label">
+                    💡 DAILY SKIN TIP
+                </div>
+
+
+                <strong>
+                    Keep it simple.
+                </strong>
+
+
+                <p>
+
+                    A gentle cleanser, moisturizer
+                    and sunscreen can be a great
+                    starting point for a beginner.
+
+                </p>
+
+            </div>
+
+
+        </aside>
+
+
+        <!-- =================================================
+             CHAT SECTION
+        ================================================== -->
+
+        <main class="chat-section">
+
+
+            <!-- HEADER -->
+
+            <header class="chat-header">
+
+
+                <div class="profile">
+
+
+                    <div class="avatar">
+
+                        ✨
+
+                        <div class="avatar-glow"></div>
+
+                        <div class="online"></div>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            DermaBuddy AI
+                        </h3>
+
+                        <p>
+                            ● Online · Your skincare companion
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="header-pill">
+
+                    <span></span>
+
+                    AI ASSISTANT
+
+                </div>
+
+
+            </header>
+
+
+            <!-- =================================================
+                 CHAT BOX
+            ================================================== -->
+
+            <div
+                class="chat-box"
+                id="chatBox"
+            >
+
+
+                <!-- WELCOME CARD -->
+
+                <div class="welcome-card">
+
+                    <small>
+                        WELCOME TO DERMABUDDY
+                    </small>
+
+
+                    <h2>
+                        Let's understand your skin. 🌸
+                    </h2>
+
+
+                    <p>
+
+                        Ask me anything about skincare —
+                        from your skin type and daily routines
+                        to ingredients, sunscreen and
+                        healthy skincare habits.
+
+                    </p>
+
+                </div>
+
+
+                <!-- BOT MESSAGE -->
+
+                <div class="message bot">
+
+
+                    <div class="message-wrap">
+
+
+                        <div class="bot-label">
+                            ✨ DERMABUDDY AI
+                        </div>
+
+
+                        <div class="bubble">
+
+👋 Hey! I'm DermaBuddy.
+
+Think of me as your friendly skincare companion. I can help you build simple routines, understand ingredients and learn better skincare habits.
+
+What would you like to explore today? 🌷
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 QUICK QUESTIONS
+            ================================================== -->
+
+            <div class="quick-area">
+
+
+                <div class="quick-heading">
+
+                    <span>
+                        QUICK EXPLORE
+                    </span>
+
+                    <span>
+                        Tap to ask
+                    </span>
+
+                </div>
+
+
+                <div class="suggestions">
+
+
+                    <button
+                        class="suggestion"
+                        onclick="sendSuggestion('How can I identify my skin type?')"
+                    >
+                        🔍 Skin type
+                    </button>
+
+
+                    <button
+                        class="suggestion"
+                        onclick="sendSuggestion('Give me a simple morning skincare routine')"
+                    >
+                        ☀️ Morning
+                    </button>
+
+
+                    <button
+                        class="suggestion"
+                        onclick="sendSuggestion('Give me a simple night skincare routine')"
+                    >
+                        🌙 Night care
+                    </button>
+
+
+                    <button
+                        class="suggestion"
+                        onclick="sendSuggestion('How can I build a skincare routine for acne-prone skin?')"
+                    >
+                        🌸 Acne care
+                    </button>
+
+
+                    <button
+                        class="suggestion"
+                        onclick="sendSuggestion('Explain niacinamide and how it is used in skincare')"
+                    >
+                        🧪 Ingredients
+                    </button>
+
+
+                    <button
+                        class="suggestion"
+                        onclick="sendSuggestion('What should I know about sunscreen and SPF?')"
+                    >
+                        ☀️ SPF
+                    </button>
+
+
+                    <button
+                        class="suggestion"
+                        onclick="sendSuggestion('Give me a beginner friendly skincare routine')"
+                    >
+                        ✨ Beginner
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 INPUT
+            ================================================== -->
+
+            <div class="input-wrapper">
+
+
+                <div class="input-area">
+
+
+                    <input
+                        type="text"
+                        id="messageInput"
+                        placeholder="Ask me about your skin..."
+                        autocomplete="off"
+                    >
+
+
+                    <button
+                        id="sendButton"
+                        title="Send"
+                    >
+                        ➤
+                    </button>
+
+
+                </div>
+
+
+                <div class="disclaimer">
+
+                    DermaBuddy AI provides general skincare
+                    information and does not replace professional
+                    medical advice.
+
+                </div>
+
+
+            </div>
+
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+
+        const input =
+            document.getElementById("messageInput");
+
+
+        const sendButton =
+            document.getElementById("sendButton");
+
+
+        const chatBox =
+            document.getElementById("chatBox");
+
+
+        /* ==========================================
+           AUTO SCROLL
+        ========================================== */
+
+        function scrollToBottom() {
+
+            requestAnimationFrame(() => {
+
+                chatBox.scrollTo({
+
+                    top:
+                        chatBox.scrollHeight,
+
+                    behavior:
+                        "smooth"
+
+                });
+
+            });
+
+        }
+
+
+        /* ==========================================
+           ADD MESSAGE
+        ========================================== */
+
+        function addMessage(
+            message,
+            sender
+        ) {
+
+
+            const messageDiv =
+                document.createElement("div");
+
+
+            messageDiv.className =
+                "message " + sender;
+
+
+            const wrapper =
+                document.createElement("div");
+
+
+            wrapper.className =
+                "message-wrap";
+
+
+            if (sender === "bot") {
+
+
+                const label =
+                    document.createElement("div");
+
+
+                label.className =
+                    "bot-label";
+
+
+                label.textContent =
+                    "✨ DERMABUDDY AI";
+
+
+                wrapper.appendChild(label);
+
+            }
+
+
+            const bubble =
+                document.createElement("div");
+
+
+            bubble.className =
+                "bubble";
+
+
+            bubble.textContent =
+                message;
+
+
+            wrapper.appendChild(
+                bubble
+            );
+
+
+            messageDiv.appendChild(
+                wrapper
+            );
+
+
+            chatBox.appendChild(
+                messageDiv
+            );
+
+
+            scrollToBottom();
+
+        }
+
+
+        /* ==========================================
+           TYPING
+        ========================================== */
+
+        function showTyping() {
+
+
+            const typing =
+                document.createElement("div");
+
+
+            typing.id =
+                "typing";
+
+
+            typing.className =
+                "message bot";
+
+
+            typing.innerHTML = `
+
+                <div class="message-wrap">
+
+                    <div class="bot-label">
+                        ✨ DERMABUDDY AI
+                    </div>
+
+                    <div class="bubble typing">
+                        Thinking about your skin... 🌸
+                    </div>
+
+                </div>
+
+            `;
+
+
+            chatBox.appendChild(
+                typing
+            );
+
+
+            scrollToBottom();
+
+        }
+
+
+        function removeTyping() {
+
+
+            const typing =
+                document.getElementById(
+                    "typing"
+                );
+
+
+            if (typing) {
+
+                typing.remove();
+
+            }
+
+        }
+
+
+        /* ==========================================
+           SEND MESSAGE
+        ========================================== */
+
+        async function sendMessage() {
+
+
+            const message =
+                input.value.trim();
+
+
+            if (!message) {
+
+                return;
+
+            }
+
+
+            addMessage(
+                message,
+                "user"
+            );
+
+
+            input.value =
+                "";
+
+
+            sendButton.disabled =
+                true;
+
+
+            showTyping();
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/chat",
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    message:
+                                        message
+
+                                })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                removeTyping();
+
+
+                if (data.reply) {
+
+
+                    addMessage(
+                        data.reply,
+                        "bot"
+                    );
+
+
+                } else {
+
+
+                    addMessage(
+
+                        "I couldn't generate a response right now. Please try again. 🌸",
+
+                        "bot"
+
+                    );
+
+                }
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "DermaBuddy Error:",
+                    error
+                );
+
+
+                removeTyping();
+
+
+                addMessage(
+
+                    "Oops! I couldn't connect to DermaBuddy right now. Please check your server and try again.",
+
+                    "bot"
+
+                );
+
+            }
+
+
+            sendButton.disabled =
+                false;
+
+
+            input.focus();
+
+        }
+
+
+        /* ==========================================
+           QUICK QUESTIONS
+        ========================================== */
+
+        function sendSuggestion(text) {
+
+            input.value =
+                text;
+
+            sendMessage();
+
+        }
+
+
+        /* ==========================================
+           SEND BUTTON
+        ========================================== */
+
+        sendButton.addEventListener(
+            "click",
+            sendMessage
+        );
+
+
+        /* ==========================================
+           ENTER KEY
+        ========================================== */
+
+        input.addEventListener(
+            "keydown",
+            function(event) {
+
+
+                if (
+                    event.key === "Enter" &&
+                    !event.shiftKey
+                ) {
+
+
+                    event.preventDefault();
+
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+
+        /* ==========================================
+           PAGE LOAD
+        ========================================== */
+
+        window.addEventListener(
+            "load",
+            function() {
+
+
+                input.focus();
+
+
+                scrollToBottom();
+
+            }
+        );
+
+
+    </script>
+
+</body>
+
+</html>
